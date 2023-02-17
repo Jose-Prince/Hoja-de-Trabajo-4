@@ -1,7 +1,19 @@
 public class Calculadora {
     
-    public Calculadora() {
+    public static boolean instance_flag = false;
+    public static Calculadora miCalculadora;
 
+    private Calculadora() {
+        instance_flag = true;
+    }
+
+    public static Calculadora getInstance(){
+        if (instance_flag) {
+            return miCalculadora;
+        } else {
+            miCalculadora = new Calculadora();
+            return miCalculadora;
+        }
     }
 
     public int suma(){
