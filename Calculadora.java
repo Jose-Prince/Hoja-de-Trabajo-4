@@ -3,7 +3,7 @@ public class Calculadora {
     public static boolean instance_flag = false;
     public static Calculadora miCalculadora;
 
-    private Calculadora() {
+    Calculadora() {
         instance_flag = true;
     }
 
