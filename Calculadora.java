@@ -18,19 +18,39 @@ public class Calculadora {
         }
     }
 
-    public int suma(int a, int b){
+    public int suma(AbstractStack<String> stack){
+        int b = Integer.valueOf(stack.peek());
+        stack.pop();
+        int a = Integer.valueOf(stack.peek());
+        stack.pop();
+
         return a + b;
     }
 
-    public int resta(int a, int b) {
+    public int resta(AbstractStack<String> stack) {
+        int b = Integer.valueOf(stack.peek());
+        stack.pop();
+        int a = Integer.valueOf(stack.peek());
+        stack.pop();
+
         return a - b;
     }
 
-    public int multiplicacion(int a, int b) {
+    public int multiplicacion(AbstractStack<String> stack) {
+        int b = Integer.valueOf(stack.peek());
+        stack.pop();
+        int a = Integer.valueOf(stack.peek());
+        stack.pop();
+
         return a * b;
     }
 
-    public int division(int a, int b) {
+    public int division(AbstractStack<String> stack) {
+        int b = Integer.valueOf(stack.peek());
+        stack.pop();
+        int a = Integer.valueOf(stack.peek());
+        stack.pop();
+        
         return a/b;
     }
 
@@ -41,58 +61,70 @@ public class Calculadora {
         return operator;
     }
 
-    public String[] infixToPostfix(String[] infix, AbstractStack<String> stack){
-        String[] postfix = new String[infix.length];
-        int i;
-        for (i = 0; i < infix.length; i++){
-
-            if (infix[i].matches("[0-9]*")){
-                postfix[i] = infix[i];
-            } else if (infix[i].matches("[(]")){
-                stack.push(infix[i]);
-            } else if (infix[i].matches("[*,/]")){
-                stack.push(infix[i]);
-            } else if (infix[i].matches("[+,-]")){
-                int signo = 0;
-                for (int u = 0; u < stack.size();u++){
-                    if (infix[i].matches("[*,/]")){
-                        signo++;
-                    } 
-                }
-
-                if (signo > 0){
-                    while (stack.isEmpty() == false){
-                        for (int u = 0; u < stack.size();u++){
-                            String operador = stack.peek();
-                            stack.pop();
-                            postfix[i+u] = operador;                  
-                        }
-                        stack.push(infix[i]);
-                    }
-                } else {
-                    stack.push(infix[i]);
-                }
-            } else if (infix[i].matches("[)]")){
-                while (stack.isEmpty() == false && stack.peek() != "(") {
-                    for (int u = 0; u < stack.size(); u++){
-                        if (stack.peek() == "("){
-                            stack.pop();
-                        } else {
-                            String operador = stack.peek();
-                            stack.pop();
-                            postfix[i+u] = operador;    
-                        }
-                    }   
-                }
-            } 
+    public int Prec(char ch) {
+        switch (ch) {
+            case '+':
+            case '-':
+                return 1;
+        
+            case '*':
+            case '/':
+                break;
         }
+        return -1;
+    }
 
-        while (stack.isEmpty() == false) {
-            for (int u = 0; u < stack.size(); u++){
-                postfix[i] = stack.peek();
+    public String infixToPostfix(String infix, AbstractStack<Character> stack){
+        String resultado = "";
+
+        for (int i = 0; i < infix.length(); i++) {
+            char c = infix.charAt(i);
+
+            if (Character.isLetterOrDigit(c))
+                resultado += c;
+            else if (c == '(')
+                stack.push(c);
+            else if (c == ')') {
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    resultado += stack.peek();
+                    stack.pop();
+                }
+
+                stack.pop();
+            } else {
+                while (!stack.isEmpty() && Prec(c) <= Prec(stack.peek())) {
+                    resultado += stack.peek();
+                    stack.pop();
+                }
+                stack.push(c);
             }
         }
 
-        return postfix;
+        while (!stack.isEmpty()) {
+            if (stack.peek() == '(')
+                return "Expresión inválida";
+            resultado += stack.peek();
+            stack.pop();
+        }
+
+        return resultado;
+    }
+
+    public int operations(String postfix, AbstractStack<String> stack) {            
+        for (int i = 0; i < postfix.length(); i++){
+            String letter = String.valueOf(postfix.charAt(i));
+            if (letter.matches("[0-9]*")){
+
+            } else if (letter.matches("[+,-,*,/]")){
+                
+            }
+        }
+        char[] postFix = new char[postfix.length()];
+                      
+                        for (int i = 0; i < postfix.length(); i++){
+                            postFix[i] = postfix.charAt(i);
+                        }
+
+        return 0;
     }
 }
