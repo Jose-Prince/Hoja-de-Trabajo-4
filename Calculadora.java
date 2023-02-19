@@ -18,40 +18,62 @@ public class Calculadora {
         }
     }
 
-    public int suma(AbstractStack<String> stack){
-        int b = Integer.valueOf(stack.peek());
+    public AbstractStack<String> suma(AbstractStack<String> stack){
+        String b = stack.peek();
+        int B = Integer.valueOf(b);
         stack.pop();
-        int a = Integer.valueOf(stack.peek());
+        String a = stack.peek();
+        int A = Integer.valueOf(a);
         stack.pop();
 
-        return a + b;
+        int resultado = A+B;
+        stack.push(String.valueOf(resultado));
+        return stack;
     }
 
-    public int resta(AbstractStack<String> stack) {
-        int b = Integer.valueOf(stack.peek());
+    public AbstractStack<String> resta(AbstractStack<String> stack) {
+        String b = stack.peek();
+        int B = Integer.valueOf(b);
         stack.pop();
-        int a = Integer.valueOf(stack.peek());
+        String a = stack.peek();
+        int A = Integer.valueOf(a);
         stack.pop();
 
-        return a - b;
+        int resultado = A-B;
+        stack.push(String.valueOf(resultado));
+        return stack;
     }
 
-    public int multiplicacion(AbstractStack<String> stack) {
-        int b = Integer.valueOf(stack.peek());
+    public AbstractStack<String> multiplicacion(AbstractStack<String> stack) {
+        String b = stack.peek();
+        int B = Integer.valueOf(b);
         stack.pop();
-        int a = Integer.valueOf(stack.peek());
+        String a = stack.peek();
+        int A = Integer.valueOf(a);
         stack.pop();
 
-        return a * b;
+        int resultado = A*B;
+        stack.push(String.valueOf(resultado));
+        return stack;
     }
 
-    public int division(AbstractStack<String> stack) {
-        int b = Integer.valueOf(stack.peek());
+    public AbstractStack<String> division(AbstractStack<String> stack) {
+        int resultado = 0;
+        String b = stack.peek();
+        int B = Integer.valueOf(b);
         stack.pop();
-        int a = Integer.valueOf(stack.peek());
+        String a = stack.peek();
+        int A = Integer.valueOf(a);
         stack.pop();
+
+
         
-        return a/b;
+        if (B != 0)
+            resultado = A/B;
+
+        stack.push(String.valueOf(resultado));
+        
+        return stack;
     }
 
     public boolean isOperator(String item) {
@@ -61,47 +83,48 @@ public class Calculadora {
         return operator;
     }
 
-    public int Prec(char ch) {
+    public int Prec(String ch) {
         switch (ch) {
-            case '+':
-            case '-':
+            case "+":
+            case "-":
                 return 1;
         
-            case '*':
-            case '/':
-                break;
+            case "*":
+            case "/":
+                return 2;
         }
         return -1;
     }
 
-    public String infixToPostfix(String infix, AbstractStack<Character> stack){
+    public String infixToPostfix(String infix, AbstractStack<String> stack){
         String resultado = "";
 
         for (int i = 0; i < infix.length(); i++) {
             char c = infix.charAt(i);
+            String s = String.valueOf(c);
 
             if (Character.isLetterOrDigit(c))
-                resultado += c;
+                resultado += c;  
             else if (c == '(')
-                stack.push(c);
+                stack.push(s);
             else if (c == ')') {
-                while (!stack.isEmpty() && stack.peek() != '(') {
+                while (!stack.isEmpty() && stack.peek() != "(") {
                     resultado += stack.peek();
                     stack.pop();
                 }
 
                 stack.pop();
             } else {
-                while (!stack.isEmpty() && Prec(c) <= Prec(stack.peek())) {
+                while (!stack.isEmpty() && Prec(s) <= Prec(stack.peek())) {
                     resultado += stack.peek();
                     stack.pop();
                 }
-                stack.push(c);
+                stack.push(s);
             }
         }
 
         while (!stack.isEmpty()) {
-            if (stack.peek() == '(')
+            if (stack.peek() == "(")
                 return "Expresión inválida";
             resultado += stack.peek();
             stack.pop();
@@ -110,21 +133,30 @@ public class Calculadora {
         return resultado;
     }
 
-    public int operations(String postfix, AbstractStack<String> stack) {            
-        for (int i = 0; i < postfix.length(); i++){
-            String letter = String.valueOf(postfix.charAt(i));
-            if (letter.matches("[0-9]*")){
+    // public int operations(String postfix, AbstractStack<Character> stack) {
+    //     int resultado = 0;            
+    //     for (int i = 0; i < postfix.length(); i++){
+    //         char letter = postfix.charAt(i);
+    //         if (Character.isDigit(letter)){
+    //             stack.push(Character.valueOf(letter));
+    //         } else {
+    //             switch (letter) {
+    //                 case '+':
+    //                     resultado = suma(stack);
+    //                     break;
+    //                 case '-':
+    //                     resultado = resta(stack);
+    //                     break;
+    //                 case '*':
+    //                     resultado = multiplicacion(stack);
+    //                     break;
+    //                 case '/':
+    //                     resultado = division(stack);
+    //                     break;
+    //             }
+    //         }
+    //     }
 
-            } else if (letter.matches("[+,-,*,/]")){
-                
-            }
-        }
-        char[] postFix = new char[postfix.length()];
-                      
-                        for (int i = 0; i < postfix.length(); i++){
-                            postFix[i] = postfix.charAt(i);
-                        }
-
-        return 0;
-    }
+    //     return resultado;
+    // }
 }
