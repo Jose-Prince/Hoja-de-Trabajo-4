@@ -139,9 +139,9 @@ public class Calculadora {
 
             if (Character.isLetterOrDigit(c))
                 resultado += c;  
-            else if (c == '(')
+            else if (s == "(")
                 stack.push(s);
-            else if (c == ')') {
+            else if (s == ")") {
                 while (!stack.isEmpty() && stack.peek() != "(") {
                     resultado += stack.peek();
                     stack.pop();
@@ -152,6 +152,8 @@ public class Calculadora {
                 while (!stack.isEmpty() && Prec(s) <= Prec(stack.peek())) {
                     resultado += stack.peek();
                     stack.pop();
+                    if (!stack.isEmpty())
+                        stack.pop();
                 }
                 stack.push(s);
             }
@@ -161,6 +163,7 @@ public class Calculadora {
             if (stack.peek() == "(")
                 return "Expresión inválida";
             resultado += stack.peek();
+            stack.pop();
             stack.pop();
         }
 

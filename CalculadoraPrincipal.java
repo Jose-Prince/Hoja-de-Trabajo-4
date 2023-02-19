@@ -64,10 +64,15 @@ public class CalculadoraPrincipal {
                                 }
                             }
                         }
+                        resultado = Integer.valueOf(stack.peek());
+                        stack.pop();
+                        
+                        if (!stack.isEmpty())
+                            stack.pop();
+
+                        System.out.println("Resultado: " + resultado + "\n");    
 
                     }
-                    resultado = Integer.valueOf(stack.peek());
-                    System.out.println("Resultado: " + resultado);    
                     
                     myReader.close();
                   } catch (FileNotFoundException e) {
