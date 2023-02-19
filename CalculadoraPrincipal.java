@@ -1,3 +1,8 @@
+/**
+ * @author José Prince
+ * Algoritmos y Estructura de datos
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -5,6 +10,10 @@ import java.util.Scanner;
 import structure5.AbstractStack;
 
 public class CalculadoraPrincipal {
+    
+    /** 
+     * @param args
+     */
     public static <E> void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Calculadora calculadora = Calculadora.getInstance();
@@ -68,7 +77,6 @@ public class CalculadoraPrincipal {
             
         } catch (Exception e) {
             // TODO: handle exception
-            in.nextLine();
             System.out.println("\nOpción inválida");
         }  
     }

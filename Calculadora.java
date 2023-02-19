@@ -1,3 +1,7 @@
+/**
+ * @author José Prince
+ * Algoritmos y estructura de datos
+ */
 import structure5.AbstractStack;
 
 public class Calculadora {
@@ -5,10 +9,16 @@ public class Calculadora {
     public static boolean instance_flag = false;
     public static Calculadora miCalculadora;
 
+    //Constructor privado de calculadoa
     private Calculadora() {
         instance_flag = true;
     }
 
+    
+    /** 
+     * @return Calculadora
+     * Crea la instancia de calculadora
+     */
     public static Calculadora getInstance(){
         if (instance_flag) {
             return miCalculadora;
@@ -18,6 +28,11 @@ public class Calculadora {
         }
     }
 
+    /**
+     * Suma los elemntos del stack de la expresión postfix
+     * @param stack
+     * @return AbstractStack<String>
+     */
     public AbstractStack<String> suma(AbstractStack<String> stack){
         String b = stack.peek();
         int B = Integer.valueOf(b);
@@ -31,6 +46,11 @@ public class Calculadora {
         return stack;
     }
 
+    /**
+     * Resta los elemntos del stack de la expresión postfix
+     * @param stack
+     * @return AbstractStack<String>
+     */
     public AbstractStack<String> resta(AbstractStack<String> stack) {
         String b = stack.peek();
         int B = Integer.valueOf(b);
@@ -44,6 +64,11 @@ public class Calculadora {
         return stack;
     }
 
+    /**
+     * Multiplica los elemntos del stack de la expresión postfix
+     * @param stack
+     * @return AbstractStack<String>
+     */
     public AbstractStack<String> multiplicacion(AbstractStack<String> stack) {
         String b = stack.peek();
         int B = Integer.valueOf(b);
@@ -57,6 +82,11 @@ public class Calculadora {
         return stack;
     }
 
+    /**
+     * Divide los elemntos del stack de la expresión postfix
+     * @param stack
+     * @return AbstractStack<String>
+     */
     public AbstractStack<String> division(AbstractStack<String> stack) {
         int resultado = 0;
         String b = stack.peek();
@@ -76,13 +106,11 @@ public class Calculadora {
         return stack;
     }
 
-    public boolean isOperator(String item) {
-        boolean operator = false;
-        if (item.matches("[+,-,*,/]"))
-            operator = true;
-        return operator;
-    }
-
+    /**
+     * Determina la prioridad del operador
+     * @param ch
+     * @return int
+     */
     public int Prec(String ch) {
         switch (ch) {
             case "+":
@@ -96,6 +124,12 @@ public class Calculadora {
         return -1;
     }
 
+    /**
+     * Convierte una expresión infix a postfix
+     * @param infix
+     * @param stack
+     * @return String
+     */
     public String infixToPostfix(String infix, AbstractStack<String> stack){
         String resultado = "";
 
@@ -132,31 +166,4 @@ public class Calculadora {
 
         return resultado;
     }
-
-    // public int operations(String postfix, AbstractStack<Character> stack) {
-    //     int resultado = 0;            
-    //     for (int i = 0; i < postfix.length(); i++){
-    //         char letter = postfix.charAt(i);
-    //         if (Character.isDigit(letter)){
-    //             stack.push(Character.valueOf(letter));
-    //         } else {
-    //             switch (letter) {
-    //                 case '+':
-    //                     resultado = suma(stack);
-    //                     break;
-    //                 case '-':
-    //                     resultado = resta(stack);
-    //                     break;
-    //                 case '*':
-    //                     resultado = multiplicacion(stack);
-    //                     break;
-    //                 case '/':
-    //                     resultado = division(stack);
-    //                     break;
-    //             }
-    //         }
-    //     }
-
-    //     return resultado;
-    // }
 }
