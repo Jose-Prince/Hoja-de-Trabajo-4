@@ -37,40 +37,13 @@ public class CalculadoraPrincipal {
                     Scanner myReader = new Scanner(myObj);
                     while (myReader.hasNextLine()) {
                         String infix = myReader.nextLine();
-                        System.out.println("Infix: " + infix);
+                        System.out.println("\nInfix: " + infix);
 
                         String postfix = calculadora.infixToPostfix(infix, stack);
                         System.out.println("Postfix: " + postfix);
 
-                        for (int i = 0; i < postfix.length(); i++) {
-                            char letter = postfix.charAt(i);
-                            String letra = String.valueOf(letter);
-                            if (letra.matches("[0-9]*")){
-                                stack.push(letra);
-                            } else {
-                                switch (letter) {
-                                    case '+':
-                                        stack = calculadora.suma(stack);
-                                        break;
-                                    case '-':
-                                        stack = calculadora.resta(stack);
-                                        break;
-                                    case '*':
-                                        stack = calculadora.multiplicacion(stack);
-                                        break;
-                                    case '/':
-                                        stack = calculadora.division(stack);
-                                        break;
-                                }
-                            }
-                        }
-                        resultado = Integer.valueOf(stack.peek());
-                        stack.pop();
-                        
-                        if (!stack.isEmpty())
-                            stack.pop();
-
-                        System.out.println("Resultado: " + resultado + "\n");    
+                        resultado = calculadora.operacion(stack, postfix);
+                        System.out.println("Resultado: " + resultado);    
 
                     }
                     

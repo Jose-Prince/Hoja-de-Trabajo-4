@@ -169,4 +169,36 @@ public class Calculadora {
 
         return resultado;
     }
+
+    public int operacion(AbstractStack<String> stack, String postfix) {
+        int resultado = 0;
+        for (int i = 0; i < postfix.length(); i++) {
+            char letter = postfix.charAt(i);
+            String letra = String.valueOf(letter);
+            if (letra.matches("[0-9]*")){
+                stack.push(letra);
+            } else {
+                switch (letter) {
+                    case '+':
+                        stack = suma(stack);
+                        break;
+                    case '-':
+                        stack = resta(stack);
+                        break;
+                    case '*':
+                        stack = multiplicacion(stack);
+                        break;
+                    case '/':
+                        stack = division(stack);
+                        break;
+                }
+            }
+        }
+        resultado = Integer.valueOf(stack.peek());
+        stack.pop();
+        
+        if (!stack.isEmpty())
+            stack.pop();
+        return resultado;
+    }
 }
