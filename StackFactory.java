@@ -24,7 +24,7 @@ public class StackFactory<E> {
                 break;
             //Doubled List
             case 2:
-                stackUsado = new DoubleLinkedList<E>();
+                stackUsado = new StackListaDoble<E>();
                 break;
             //ArrayList
             case 3:
