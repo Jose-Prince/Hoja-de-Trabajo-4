@@ -44,6 +44,7 @@ public class StackListaDoble<E> extends AbstractStack<E> {
     }
 
     /**
+     * @param value
      * Añade un elemento a la primera posición de la lista
      */
     public void add(E value) {
